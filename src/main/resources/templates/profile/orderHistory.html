@@ -1,4 +1,4 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -17,6 +17,7 @@
         info</a>
     <a class="passBut" th:href="@{/account/{userId}/update_pass(userId=${userId})}"><i class="fa fa-lock"></i> Change
         pass</a>
+    <a class="passBut" th:href="@{/account/{userId}/block_users(userId=${userId})}" sec:authorize="hasAuthority('ROLE_ADMIN')"><i class="fa fa-users"></i> Block users</a>
 </div>
 <div class="main">
     <div id="mainBorder">

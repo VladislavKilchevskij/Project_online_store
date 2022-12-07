@@ -16,7 +16,7 @@
         <a class="histBut" th:href="@{/account/{userId}/orders(userId=${userId})}"><i class="fa fa-history"></i> Orders</a>
         <a class="editBut" th:href="@{/account/{userId}/update_info(userId=${userId})}"><i class="fa fa-fw fa-user"></i>Edit info</a>
         <a class="passBut" th:href="@{/account/{userId}/update_pass(userId=${userId})}"><i class="fa fa-lock"></i> Change pass</a>
-        <a class="passBut" th:href="@{/account/{userId}/block_users(userId=${userId})}" sec:authorize="hasAuthority('ROLE_ADMIN')"><i class="fa fa-lock"></i> Block users</a>
+        <a class="passBut" th:href="@{/account/{userId}/block_users(userId=${userId})}" sec:authorize="hasAuthority('ROLE_ADMIN')"><i class="fa fa-users"></i> Block users</a>
     </div>
     <div class="main">
         <div id="mainBorder">

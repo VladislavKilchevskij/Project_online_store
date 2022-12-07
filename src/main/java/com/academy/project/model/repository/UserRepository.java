@@ -1,5 +1,6 @@
 package com.academy.project.model.repository;
 
+import com.academy.project.model.entity.Role;
 import com.academy.project.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -8,11 +9,13 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
-import java.util.Optional;
+import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
     User getUserByUsernameAndPassword(String username, String password);
+
+    List<User> getAllByRole(Role role);
 
     @Query("select u from User u where u.username = ?1")
     User findByUsername(String username);
@@ -34,5 +37,12 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             "u.phoneNumber= :#{#user.phoneNumber} " +
             "where u.id = :#{#user.id}")
     void updateInfo(@Param("user") User user);
+
+    @Transactional
+    @Modifying
+    @Query("update User u " +
+            "set u.accountNonLocked= :#{#user.accountNonLocked} " +
+            "where u.id= :#{#user.id}")
+    void updateAccessStatus(@Param("user") User user);
 }
 

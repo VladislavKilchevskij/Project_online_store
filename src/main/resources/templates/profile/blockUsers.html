@@ -1,10 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/account.css" th:href="@{/css/account.css}">
+    <title>Blocking page</title>
 </head>
 <body>
-
+<ul>
+    <li class="leftLi"><a href="/">Home</a></li>
+    <li class="leftLi"><a href="/catalog">Catalog</a></li>
+    <li class="secondLi"><a href="/logout">Logout</a></li>
+    <li class="secondLi"><a th:href="@{/account/{userId}(userId=${userId})}">Profile</a></li>
+</ul>
+<div class="sidebar">
+    <a class="histBut" th:href="@{/account/{userId}/orders(userId=${userId})}"><i class="fa fa-history"></i> Orders</a>
+    <a class="editBut" th:href="@{/account/{userId}/update_info(userId=${userId})}"><i
+            class="fa fa-fw fa-user"></i>Edit info</a>
+    <a class="passBut" th:href="@{/account/{userId}/update_pass(userId=${userId})}"><i
+            class="fa fa-lock"></i> Change pass</a>
+</div>
+<div class="main">
+    <div id="mainBorder">
+        <h3>Customers:</h3>
+            <table>
+                <tr>
+                    <th><span class="accSpan">Login</span></th>
+                    <th><span class="accSpan">E-mail</span></th>
+                    <th><span class="accSpan">Status</span></th>
+                </tr>
+                <tr th:each="customer : ${customers}">
+                    <td><span class="accSpan" th:text="${customer.username}"></span></td>
+                    <td style="padding: 0 10px"><span class="accSpan" th:text="${customer.email}"></span></td>
+                    <td style="padding: 0 10px"><span class="accSpan" style="color: rgba(20,220,37,0.9)" th:if="${customer.accountNonLocked}">Active</span><span class="accSpan" style="color: rgba(220,20,20,0.9)" th:unless="${customer.accountNonLocked}">Locked</span></td>
+                    <td>
+                        <form th:action="@{/account/{userId}/block_users/{customerId}(userId=${userId}, customerId=${customer.id})}" method="post">
+                            <button class="submitButton" type="submit">Lock/unlock</button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+    </div>
+</div>
 </body>
 </html>

@@ -1,4 +1,4 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,6 +18,7 @@
     <a class="histBut" th:href="@{/account/{userId}/orders(userId=${userId})}"><i class="fa fa-history"></i> Orders</a>
     <a class="passBut" th:href="@{/account/{userId}/update_pass(userId=${userId})}"><i class="fa fa-lock"></i> Change
         pass</a>
+    <a class="passBut" th:href="@{/account/{userId}/block_users(userId=${userId})}" sec:authorize="hasAuthority('ROLE_ADMIN')"><i class="fa fa-users"></i> Block users</a>
 </div>
 <div class="main">
     <div id="mainBorder">
