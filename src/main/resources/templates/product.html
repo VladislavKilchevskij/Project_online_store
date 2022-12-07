@@ -1,0 +1,36 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="/css/account.css" th:href="@{/css/product.css}">
+    <meta charset="UTF-8">
+    <title>Product</title>
+</head>
+<body>
+    <a th:href="@{/catalog}">Back to catalog</a>
+
+    <div>
+        <div th:each="mediaElement : ${product.getMedia()}">
+            <img style="height: 300px; float: left" th:src="'/imageRepo' + ${mediaElement.mediaUrl} + ${mediaElement.mediaName}"/>
+        </div>
+        <p th:text="${product.productName}">productName</p>
+        <p th:text="'Производитель: ' + ${product.manufacturer.manufacturerName}">manufacturer</p>
+        <p th:text="'Модель: ' + ${product.modelName}">modelName</p>
+        <p th:text="'Интерфейс: ' + ${product.interfaceName}" th:if="${product.interfaceName} != null">interfaceName</p>
+        <p th:text="'Частота (МГц): ' + ${product.frequency}" th:if="${product.frequency} != null">frequency</p>
+        <p th:text="'Объём памяти (Гб): ' + ${product.memorySize}" th:if="${product.memorySize} != null">memorySize</p>
+        <p th:text="'Тип памяти: ' + ${product.memoryType}" th:if="${product.memoryType} != null">memoryType</p>
+        <p th:text="'Количество слотов памяти: ' + ${product.memorySlotNumber}" th:if="${product.memorySlotNumber} != null">memorySlotNumber</p>
+        <p th:text="'Количество ядер: ' + ${product.coreNumber}" th:if="${product.coreNumber} != null">coreNumber</p>
+        <p th:text="'Количество потоков (max): ' + ${product.maxThreadNumber}" th:if="${product.maxThreadNumber} != null">maxThreadNumber</p>
+        <p th:text="'Тайминги: ' + ${product.timingNymber}" th:if="${product.timingNymber} != null">timingNymber</p>
+        <p th:text="'Форм-фактор: ' + ${product.formFactor}" th:if="${product.formFactor} != null">formFactor</p>
+        <p th:text="'Версия Pci Express: ' + ${product.versionPciExpress}" th:if="${product.versionPciExpress} != null">versionPciExpress</p>
+        <p th:text="'Цена: ' + ${product.price} + ' руб.'">versionPciExpress</p>
+        <form th:action="@{/{userId}/add_to_cart(userId=${userId})}" th:object="${product}" method="post">
+            <input type="hidden" name="productId" th:value="${product.getId()}"/>
+            <input type="hidden" name="price" th:value="${product.getPrice()}"/>
+            <input type="number" name="amount" min="1" value="1" style="width: 45px"/><button class="btn btn-warning" type="submit">Add to cart</button>
+        </form>
+    </div>
+</body>
+</html>

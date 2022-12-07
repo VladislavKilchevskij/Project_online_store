@@ -1,0 +1,50 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/account.css" th:href="@{/css/account.css}">
+    <title>My cart</title>
+</head>
+<body>
+<ul>
+    <li class="leftLi"><a href="/">Home</a></li>
+    <li class="leftLi"><a href="/catalog">Catalog</a></li>
+    <li class="secondLi"><a href="/logout">Logout</a></li>
+    <li class="secondLi"><a th:href="@{/account/{userId}(userId=${userId})}">Profile</a></li>
+</ul>
+<div class="sidebar">
+    <a class="histBut" th:href="@{/account/{userId}/orders(userId=${userId})}"><i class="fa fa-history"></i> Orders</a>
+    <a class="editBut" th:href="@{/account/{userId}/update_info(userId=${userId})}"><i
+            class="fa fa-fw fa-user"></i>Edit info</a>
+    <a class="passBut" th:href="@{/account/{userId}/update_pass(userId=${userId})}"><i
+            class="fa fa-lock"></i> Change pass</a>
+</div>
+<div class="main">
+    <div id="mainBorder">
+        <h3>Cart:</h3>
+        <span class="errorSpan" th:if="${orderDto.totalPrice == 0.00}">You have no products in cart!</span>
+        <th:block th:if="${orderDto.totalPrice != 0.00}">
+            <table>
+                <tr>
+                    <th><span class="accSpan">Product</span></th>
+                    <th><span class="accSpan">Amount</span></th>
+                    <th><span class="accSpan">Cost</span></th>
+                </tr>
+                <tr th:each="cart : ${orderDto.getCarts()}">
+                    <td><span class="accSpan" th:text="${cart.getProduct().getProductName()}"></span></td>
+                    <td style="text-align: center"><span class="accSpan" th:text="${cart.getAmount()}"></span></td>
+                    <td style="padding: 0 0 0 10px"><span class="accSpan" th:text="${cart.getPrice()}"></span></td>
+                </tr>
+                <tr>
+                    <td><span style="color: #ffbd2a">Total cost: </span></td>
+                    <td></td>
+                    <td style="padding: 0 0 0 10px"><span style="color: #ffbd2a"
+                                                          th:text="${orderDto.getTotalPrice()}"></span></td>
+                </tr>
+            </table>
+            <a class="submitButton" style="text-decoration: none" th:href="@{/{userId}/order(userId=${userId})}">Checkout</a>
+        </th:block>
+    </div>
+</div>
+</body>
+</html>

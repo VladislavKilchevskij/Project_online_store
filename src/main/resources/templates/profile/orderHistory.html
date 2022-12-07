@@ -1,0 +1,80 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/account.css" th:href="@{/css/account.css}">
+    <title>Orders</title>
+</head>
+<body>
+<ul>
+    <li class="leftLi"><a href="/">Home</a></li>
+    <li class="leftLi"><a href="/catalog">Catalog</a></li>
+    <li class="secondLi"><a href="/logout">Logout</a></li>
+</ul>
+<div class="sidebar">
+    <a class="cartBut" th:href="@{/account/{userId}/cart(userId=${userId})}"><i class="fa fa-cart-arrow-down"></i> Cart</a>
+    <a class="editBut" th:href="@{/account/{userId}/update_info(userId=${userId})}"><i class="fa fa-fw fa-user"></i>Edit
+        info</a>
+    <a class="passBut" th:href="@{/account/{userId}/update_pass(userId=${userId})}"><i class="fa fa-lock"></i> Change
+        pass</a>
+</div>
+<div class="main">
+    <div id="mainBorder">
+        <h3>Orders:</h3>
+        <table>
+            <tr>
+                <th><span class="accSpan">Order number</span></th>
+                <th style="padding: 0 15px"><span class="accSpan">Order status</span></th>
+                <th style="padding: 0 15px"><span class="accSpan">Ordered date</span></th>
+                <th style="padding: 0 15px"><span class="accSpan">Delivery date</span></th>
+                <th style="padding: 0 15px"><span class="accSpan">Total cost</span></th>
+                <th><span class="accSpan">Delivery address</span></th>
+            </tr>
+            <th:block th:each="orderDto : ${ordersDto}">
+                <tr style="text-align: center">
+                    <td><span class="accSpan" th:text="${orderDto.id}"></span></td>
+                    <td><span class="accSpan" th:text="${orderDto.orderStatus}"></span></td>
+                    <td><span class="accSpan" th:text="${orderDto.orderDate}"></span></td>
+                    <td><span class="accSpan" th:text="${orderDto.deliveryDate}"></span></td>
+                    <td><span class="accSpan" th:text="${orderDto.totalPrice}"></span></td>
+                    <td>
+                        <span class="accSpan" th:text="${orderDto.address.postCode} + ','"/>
+                        <span class="accSpan" th:text="${orderDto.address.country} +','"/>
+                        <span class="accSpan" th:text="${orderDto.address.region} + ' область,'"
+                              th:if="(${orderDto.address.region} != null) and (${orderDto.address.region} != '')"/>
+                        <span class="accSpan" th:text="${orderDto.address.district} + ' район, '"
+                              th:if="(${orderDto.address.district} != null) and (${orderDto.address.district} != '')"/>
+                        <span class="accSpan" th:text="'н.п. ' + ${orderDto.address.city} + ','"/>
+                        <span class="accSpan" th:text="'улица ' + ${orderDto.address.street} + ','"/>
+                        <span class="accSpan" th:text="'д. ' + ${orderDto.address.house}"/>
+                        <span class="accSpan" th:text="', корпус ' + ${orderDto.address.building}"
+                              th:if="(${orderDto.address.building} != null) and (${orderDto.address.building} != '')"/>
+                        <span class="accSpan" th:text="', кв. ' + ${orderDto.address.flat}"
+                              th:if="(${orderDto.address.flat} != null) and (${orderDto.address.flat} != '')"/>
+                    </td>
+                </tr>
+            </th:block>
+        </table>
+    </div>
+</div>
+<script>
+    const modalTrigger = document.querySelector('[data-modal]'),
+        modal = document.querySelector('.wrapper-form'),
+        modalCloseBtn = document.querySelector('[data-close]');
+
+    function openModal() {
+        modal.classList.add('show');
+        modal.classList.remove('hide');
+    }
+
+    modalTrigger.addEventListener('click', openModal);
+
+    function closeModal() {
+        modal.classList.add('hide');
+        modal.classList.remove('show');
+    }
+
+    modalCloseBtn.addEventListener('click', closeModal);
+</script>
+</body>
+</html>

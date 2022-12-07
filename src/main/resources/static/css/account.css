@@ -1,0 +1,247 @@
+body {
+    background: #1a1f25;
+    margin: 0;
+    padding: 0;
+    font-family: "Raleway", sans-serif;
+}
+/*Navigation bar*/
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    position: sticky;
+    background-color: #2B2B2BFF;
+    top: 0;
+}
+
+li {
+    display: inline;
+}
+li a {
+    display: block;
+    margin: auto;
+    padding: 0.75rem 1rem;
+    font-family: sans-serif;
+    font-size: 1.1rem;
+    text-decoration: none;
+    color: #ffc107;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+    z-index: 1;
+    border-radius: 4px;
+}
+
+li a:after {
+    content: "";
+    display: block;
+    height: 2px;
+    position: absolute;
+    bottom: 0;
+    right: 1.25rem;
+    left: 1.25rem;
+    background-color: #ffc107;
+    transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+    transform-origin: bottom center;
+    z-index: -1;
+    border-radius: 4px;
+}
+li a:hover {
+    color: #2D2D2D;
+}
+li a:hover:after {
+    right: 0;
+    left: 0;
+    height: 100%;
+}
+
+.leftLi {
+    float: left;
+}
+.secondLi {
+    float: right;
+}
+/*Left menu*/
+.sidebar {
+    height: 100%;
+    width: 170px;
+    position: fixed;
+    z-index: 1;
+    top: 45px;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    padding-top: 16px;
+}
+
+.sidebar a {
+    text-decoration: none;
+    font-size: 20px;
+    color: #818181;
+    display: block;
+}
+
+.cartBut, .histBut, .passBut {
+    padding: 6px 8px 6px 16px;
+}
+
+.editBut {
+    padding: 6px 8px 6px 13px;
+}
+
+.sidebar a:hover {
+    color: #ffc107;
+}
+/*Main field*/
+.main {
+    margin-left: 170px;
+}
+/*Main: font styles*/
+table, label, #addrContainer {
+    color: rgba(241, 241, 241, 0.9);
+    font-weight: 500;
+    font-size: 18px;
+}
+
+@media screen and (max-height: 450px) {
+    .sidebar {padding-top: 15px;}
+    .sidebar a {font-size: 18px;}
+}
+
+#mainBorder {
+    width: fit-content;
+    margin: 20px;
+    padding: 30px;
+    border-radius: 15px;
+    background-color: rgba(17, 17, 17, 0.6);
+    box-shadow: 0 0 10px rgb(17, 17, 17);
+}
+
+h3 {
+    color: rgba(255, 193, 7, 0.9);
+    margin: 8px 0 8px 0;
+    font-weight: bold;
+}
+
+td {
+    padding: 2px 0;
+}
+/*Addresses field*/
+.accSpan {
+    margin: 5px 0;
+}
+
+.input {
+    display: block;
+    margin: 5px 0;
+    background: rgba(105, 111, 122, 0.24);
+    border: 2px solid #696f7a;
+    color: #e6b333;
+    height: 40px;
+    width: 250px;
+    border-radius: 3px;
+    padding: 5px;
+    outline: none;
+    font-weight: 300;
+    font-size: 18px;
+}
+.submitButton {
+    margin-top: 10px;
+    margin-right: 10px;
+    height: 30px;
+    width: 120px;
+    border: none;
+    border-radius: 3px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 300;
+    background: rgba(255, 189, 42, 0.8);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.submitButton:hover {
+    background: #ffbd2a;
+    color: #111111;
+}
+
+.addressForm button {
+    margin-top: 10px;
+}
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
+.btn-delete, .btn-update, .btn-new {
+    border: 1px solid;
+    width: fit-content;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 2px;
+    color: rgba(255, 255, 255, 0.9);
+    opacity: 100%;
+}
+
+.btn-new {
+    margin-top: 10px;
+    background-color: rgba(15, 255, 7, 0.7);
+    border-color: rgba(15, 255, 7, 0.7);
+    font-family: "Raleway", sans-serif;
+    cursor: pointer;
+
+}
+
+.btn-new:hover {
+    background-color: rgba(15, 255, 7, 0.9);
+    border-color: rgba(15, 255, 7, 0.9);
+}
+
+.btn-update {
+    margin: 5px 2px 5px 0;
+    background-color: rgba(7, 86, 255, 0.8);
+    border-color: rgba(7, 86, 255, 0.8);
+}
+
+.btn-update:hover {
+    background-color: rgba(7, 86, 255, 0.9);
+    border-color: rgba(7, 86, 255, 0.9);
+}
+
+.btn-delete {
+    margin: 5px 2px;
+    background-color: rgba(255, 7, 7, 0.8);
+    border-color: rgba(255, 7, 7, 0.8);
+}
+
+.btn-delete:hover {
+    background-color: rgba(255, 7, 7, 0.9);
+    border-color: rgba(255, 7, 7, 0.9);
+}
+/*editPassword page unique styles*/
+.errorSpan {
+    display: block;
+    text-align: center;
+    margin: 10px 0;
+    border-radius: 3px;
+    border: 1px solid #dc1414;
+    width: 238px;
+    background-color: rgba(220, 20, 20, 0.25);
+    padding: 5px;
+    color: rgba(242, 243, 244, 0.9);
+}
+.succSpan {
+    display: block;
+    text-align: center;
+    margin: 10px 0;
+    border-radius: 3px;
+    border: 1px solid #14dc25;
+    width: 238px;
+    background-color: rgba(20, 220, 37, 0.25);
+    padding: 5px;
+    color: rgba(242, 243, 244, 0.9);
+}

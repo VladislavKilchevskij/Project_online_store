@@ -1,0 +1,73 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(rgba(17, 17, 17, 0.6), rgba(0, 0, 0, 0.8)), url("../img/index_background.png") no-repeat center center / cover;
+}
+
+.container {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    width: 300px;
+    background-color: rgba(17, 17, 17, 0.9);
+    box-shadow: 0 0 17px 4px rgb(0 0 0);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+h3 {
+    margin: 5px 5px 5px 0;
+    float: left;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.3em;
+    font-family: 'Roboto', sans-serif;
+}
+
+input {
+    height: 40px;
+    width: 100%;
+    border-radius: 3px;
+    padding: 5px;
+    margin: 3px 0;
+    outline: none;
+}
+
+.inputFields {
+
+    background: transparent;
+    border: 2px solid #22272d;
+    padding-left: 2px;
+    color: #e6b333;
+}
+
+a {
+    margin: 5px 0 5px 5px;
+    float: right;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    border: none;
+    text-align: right;
+}
+
+input[type="submit"] {
+    border: none;
+    text-align: center;
+    cursor: pointer;
+}
+
+input[type="submit"], a {
+    background: rgba(255, 192, 27, 0.85);
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.1em;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 550;
+}
+
+input[type="submit"]:hover, a:hover {
+    background-color: rgba(255, 192, 27, 0.95);
+    color: rgba(43, 43, 43, 0.9);
+}

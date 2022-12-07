@@ -1,0 +1,109 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/manageProductStyles.css" th:href="@{/css/manageProductStyles.css}">
+    <title>Product add page</title>
+</head>
+<body>
+<ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/catalog">Catalog</a></li>
+    <li><a href="/sign_in">Sign in</a></li>
+</ul>
+<div>
+    <h3>New product</h3>
+    <form th:action="@{/product_manager/save}" th:object="${newProductDto}" th:method="post">
+        <table>
+            <tr>
+                <td><label for="productName">Название: </label></td>
+                <td><input id="productName" type="text" th:field="${newProductDto.productName}"/></td>
+            </tr>
+            <tr>
+                <td><label for="category">Категория: </label></td>
+                <td>
+                    <select id="category" th:field="${newProductDto.category.id}">
+                        <th:block th:each="categoryDto : ${categories}">
+                            <option th:value="${categoryDto.getId()}" th:text="${categoryDto.categoryName}">
+                                placeholder
+                            </option>
+                        </th:block>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="manufacturer">Производитель: </label></td>
+                <td>
+                    <select id="manufacturer" th:field="${newProductDto.manufacturer.id}">
+                        <div th:each="manufacturerDto : ${manufacturers}">
+                            <option th:value="${manufacturerDto.getId()}" th:text="${manufacturerDto.manufacturerName}">
+                                placeholder
+                            </option>
+                        </div>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="modelName">Модель: </label></td>
+                <td><input id="modelName" type="text" th:field="${newProductDto.modelName}"/></td>
+            </tr>
+            <tr>
+                <td><label for="interfaceName">Интерфейс: </label></td>
+                <td><input id="interfaceName" type="text" th:field="${newProductDto.interfaceName}"
+                           placeholder="GPU option"/></td>
+            </tr>
+            <tr>
+                <td><label for="frequency">Частота (МГц): </label></td>
+                <td><input id="frequency" type="text" th:field="${newProductDto.frequency}"
+                           placeholder="GPU, CPU option"/></td>
+            </tr>
+            <tr>
+                <td><label for="memorySize">Объём памяти (Гб): </label></td>
+                <td><input id="memorySize" type="text" th:field="${newProductDto.memorySize}"
+                           placeholder="GPU, RAM option"/></td>
+            </tr>
+            <tr>
+                <td><label for="memoryType">Тип памяти: </label></td>
+                <td><input id="memoryType" type="text" th:field="${newProductDto.memoryType}"
+                           placeholder="GPU, RAM option"/></td>
+            </tr>
+            <tr>
+                <td><label for="memorySlotNumber">Кол-во слотов памяти: </label></td>
+                <td><input id="memorySlotNumber" type="text" th:field="${newProductDto.memorySlotNumber}"
+                           placeholder="Motherboard option"/></td>
+            </tr>
+            <tr>
+                <td><label for="coreNumber">Кол-во ядер: </label></td>
+                <td><input id="coreNumber" type="text" th:field="${newProductDto.coreNumber}" placeholder="CPU option"/>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="maxThreadNumber">Макс. кол-во потоков: </label></td>
+                <td><input id="maxThreadNumber" type="text" th:field="${newProductDto.maxThreadNumber}"
+                           placeholder="CPU option"/></td>
+            </tr>
+            <tr>
+                <td><label for="timingNymber">Тайминги: </label></td>
+                <td><input id="timingNymber" type="text" th:field="${newProductDto.timingNymber}"
+                           placeholder="RAM option"/></td>
+            </tr>
+            <tr>
+                <td><label for="formFactor">Форм-фактор: </label></td>
+                <td><input id="formFactor" type="text" th:field="${newProductDto.formFactor}"
+                           placeholder="Motherboard option"/></td>
+            </tr>
+            <tr>
+                <td><label for="versionPciExpress">Версия PciExpress: </label></td>
+                <td><input id="versionPciExpress" type="text" th:field="${newProductDto.versionPciExpress}"
+                           placeholder="Motherboard option"/></td>
+            </tr>
+            <tr>
+                <td><label for="price">Цена: </label></td>
+                <td><input id="price" type="text" th:field="${newProductDto.price}"/></td>
+            </tr>
+        </table>
+        <button type="submit">Save</button>
+        <button type="reset">Reset</button>
+    </form>
+</div>
+</body>
+</html>

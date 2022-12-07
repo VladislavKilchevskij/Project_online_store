@@ -1,0 +1,47 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/account.css" th:href="@{/css/account.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>User edit page</title>
+</head>
+<body>
+<ul>
+    <li class="leftLi"><a href="/static">Home</a></li>
+    <li class="leftLi"><a href="/catalog">Catalog</a></li>
+    <li class="secondLi"><a href="/logout">Logout</a></li>
+    <li class="secondLi"><a th:href="@{/account/{userId}(userId=${userId})}">Profile</a></li>
+</ul>
+<div class="sidebar">
+    <a class="cartBut" th:href="@{/account/{userId}/cart(userId=${userId})}"><i class="fa fa-cart-arrow-down"></i> Cart</a>
+    <a class="histBut" th:href="@{/account/{userId}/orders(userId=${userId})}"><i class="fa fa-history"></i> Orders</a>
+    <a class="passBut" th:href="@{/account/{userId}/update_pass(userId=${userId})}"><i class="fa fa-lock"></i> Change
+        pass</a>
+</div>
+<div class="main">
+    <div id="mainBorder">
+        <h3>Edit information:</h3>
+        <form th:action="@{/account/{userId}/update_info(userId=${userId})}" th:object="${editUserDto}"
+              th:method="post">
+            <input class="input" id="id" type="hidden" th:field="*{id}" th:value="${editUserDto.getId()}"/>
+            <label for="login">Login: </label>
+            <input class="input" id="login" type="text" th:field="*{username}" th:value="${editUserDto.getUsername()}"/>
+            <label for="name">Name: </label>
+            <input class="input" id="name" type="text" th:field="*{name}" th:value="${editUserDto.getName()}"/>
+            <label for="surname">Surname: </label>
+            <input class="input" id="surname" type="text" th:field="*{surname}" th:value="${editUserDto.getSurname()}"/>
+            <label for="email">E-mail: </label>
+            <input class="input" id="email" type="email" th:field="*{email}" th:value="${editUserDto.getEmail()}"/>
+            <label for="phone">Phone: </label>
+            <input class="input" id="phone" type="text" th:field="*{phoneNumber}"
+                   th:value="${editUserDto.getPhoneNumber()}"/>
+            <input class="submitButton" type="submit"
+                   value="Update"/>
+            <input class="submitButton" type="reset"
+                   value="Clear"/>
+        </form>
+    </div>
+</div>
+</body>
+</html>

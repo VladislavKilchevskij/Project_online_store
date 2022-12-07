@@ -1,0 +1,52 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/css/account.css" th:href="@{/css/account.css}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <title>User edit page</title>
+</head>
+<body>
+<ul>
+  <li class="leftLi"><a href="/static">Home</a></li>
+  <li class="leftLi"><a href="/catalog">Catalog</a></li>
+  <li class="secondLi"><a href="/logout">Logout</a></li>
+  <li class="secondLi"><a th:href="@{/account/{userId}(userId=${userId})}">Profile</a></li>
+</ul>
+<div class="sidebar">
+  <a class="cartBut" th:href="@{/account/{userId}/cart(userId=${userId})}"><i class="fa fa-cart-arrow-down"></i> Cart</a>
+  <a class="histBut" th:href="@{/account/{userId}/orders(userId=${userId})}"><i class="fa fa-history"></i> Orders</a>
+  <a class="editBut" th:href="@{/account/{userId}/editUser(userId=${userId})}"><i class="fa fa-fw fa-user"></i>Edit info</a>
+  <a class="passBut" th:href="@{/account/{userId}/changePassword(userId=${userId})}"><i class="fa fa-lock"></i> Change pass</a>
+</div>
+<div class="main">
+  <div id="mainBorder">
+    <h3>Edit address:</h3>
+    <form th:action="@{/account/{userId}/update_address(userId=${userId})}"
+          th:method="post"
+          th:object="${updateAddressDto}">
+      <label for="postcode">Postcode: </label>
+      <input id="postcode" class="input" type="text" th:field="*{postCode}" th:value="${updateAddressDto.getPostCode()}"/>
+      <label for="country">Country: </label>
+      <input id="country" class="input" type="text" th:field="*{country}" th:value="${updateAddressDto.getCountry()}"/>
+      <label for="region">Region: </label>
+      <input id="region" class="input" type="text" th:field="*{region}" th:value="${updateAddressDto.getRegion()}"/>
+      <label for="district">District: </label>
+      <input id="district" class="input" type="text" th:field="*{district}" th:value="${updateAddressDto.getDistrict()}"/>
+      <label for="city">City: </label>
+      <input id="city" class="input" type="text" th:field="*{city}" th:value="${updateAddressDto.getCity()}"/>
+      <label for="street">Street: </label>
+      <input id="street" class="input" type="text" th:field="*{street}" th:value="${updateAddressDto.getStreet()}"/>
+      <label for="house">House: </label>
+      <input id="house" class="input" type="text" th:field="*{house}" th:value="${updateAddressDto.getHouse()}"/>
+      <label for="building">Building: </label>
+      <input id="building" class="input" type="text" th:field="*{building}" th:value="${updateAddressDto.getBuilding()}"/>
+      <label for="flat">Flat: </label>
+      <input id="flat" class="input" type="text" th:field="*{flat}" th:value="${updateAddressDto.getFlat()}"/>
+      <input id="id" class="input" type="hidden" th:field="*{id}" th:value="${updateAddressDto.getId()}"/>
+      <input class="submitButton" type="submit" value="update"/> <input class="submitButton" type="reset" value="Reset"/>
+    </form>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/css/account.css" th:href="@{/css/account.css}">
+        <title>My account</title>
+    </head>
+    <body>
+    <ul>
+        <li class="leftLi"><a href="/">Home</a></li>
+        <li class="leftLi"><a href="/catalog">Catalog</a></li>
+        <li class="secondLi"><a href="/logout">Logout</a></li>
+    </ul>
+    <div class="sidebar">
+        <a class="cartBut" th:href="@{/account/{userId}/cart(userId=${userId})}"><i class="fa fa-cart-arrow-down"></i> Cart</a>
+        <a class="histBut" th:href="@{/account/{userId}/orders(userId=${userId})}"><i class="fa fa-history"></i> Orders</a>
+        <a class="editBut" th:href="@{/account/{userId}/update_info(userId=${userId})}"><i class="fa fa-fw fa-user"></i>Edit info</a>
+        <a class="passBut" th:href="@{/account/{userId}/update_pass(userId=${userId})}"><i class="fa fa-lock"></i> Change pass</a>
+        <a class="passBut" th:href="@{/account/{userId}/block_users(userId=${userId})}" sec:authorize="hasAuthority('ROLE_ADMIN')"><i class="fa fa-lock"></i> Block users</a>
+    </div>
+    <div class="main">
+        <div id="mainBorder">
+            <h3>User information:</h3>
+            <table>
+                <tr>
+                <td>User:</td>
+                <td><span class="accSpan" th:utext="${userAccountDto.name}"></span><span th:utext="' ' + ${userAccountDto.surname}"></span></td>
+                </tr>
+                <tr>
+                    <td>E-mail:</td>
+                    <td><span class="accSpan" th:utext="${userAccountDto.email}"></span></td>
+                </tr>
+                <tr>
+                    <td>Phone:</td>
+                    <td><span class="accSpan" th:utext="'  '+ ${userAccountDto.phoneNumber}"></span></td>
+                </tr>
+            </table>
+                <h3>Addresses:</h3>
+                <div id="addrContainer" th:each="addressDto : ${userAccountDto.getAddresses()}">
+                    <span class="accSpan" th:text="${addressDto.postCode} + ','"/>
+                    <span class="accSpan" th:text="${addressDto.country} +','"/>
+                    <span class="accSpan" th:text="${addressDto.region} + ' область,'" th:if="(${addressDto.region} != null) and (${addressDto.region} != '')"/>
+                    <span class="accSpan" th:text="${addressDto.district} + ' район, '" th:if="(${addressDto.district} != null) and (${addressDto.district} != '')"/>
+                    <span class="accSpan" th:text="'н.п. ' + ${addressDto.city} + ','"/>
+                    <span class="accSpan" th:text="'улица ' + ${addressDto.street} + ','"/>
+                    <span class="accSpan" th:text="'д. ' + ${addressDto.house}"/>
+                    <span class="accSpan" th:text="', корпус ' + ${addressDto.building}" th:if="(${addressDto.building} != null) and (${addressDto.building} != '')"/>
+                    <span class="accSpan" th:text="', кв. ' + ${addressDto.flat}" th:if="(${addressDto.flat} != null) and (${addressDto.flat} != '')"/>
+                    <div class="btns-wrapper">
+                        <a th:href="@{/account/{userId}/update_address/{addrId}(userId=${userAccountDto.getId()}, addrId=${addressDto.getId()})}" class="btn-update">update</a>
+                        <a th:href="@{/account/{userId}/delete_address/{addrId}(userId=${userAccountDto.getId()}, addrId=${addressDto.getId()})}" class="btn-delete">delete</a>
+                    </div>
+                </div>
+            <div class="wrapper-form hide">
+                <form th:action="@{/account/{userId}/save_address(userId=${userAccountDto.getId()})}"
+                      th:method="post"
+                      th:object="${newAddressDto}"
+                      class="addressForm"
+                      id="saveForm">
+                    <input class="input" type="text" th:field="${newAddressDto.postCode}" placeholder="post code"/>
+                    <input class="input" type="text" th:field="${newAddressDto.country}" placeholder="country"/>
+                    <input class="input" type="text" th:field="${newAddressDto.region}" placeholder="region"/>
+                    <input class="input" type="text" th:field="${newAddressDto.district}" placeholder="district"/>
+                    <input class="input" type="text" th:field="${newAddressDto.city}" placeholder="city"/>
+                    <input class="input" type="text" th:field="${newAddressDto.street}" placeholder="street"/>
+                    <input class="input" type="text" th:field="${newAddressDto.house}" placeholder="house"/>
+                    <input class="input" type="text" th:field="${newAddressDto.building}" placeholder="building"/>
+                    <input class="input" type="text" th:field="${newAddressDto.flat}" placeholder="flat"/>
+                    <button class="btn-new" type="submit">Save</button> <button class="btn-delete" type="reset">Reset</button>
+                </form>
+                <button class="btn-update" data-close>Hide</button>
+            </div>
+            <button class="btn-new" data-modal>Add address</button>
+        </div>
+    </div>
+    <script>
+        const modalTrigger = document.querySelector('[data-modal]'),
+            modal = document.querySelector('.wrapper-form'),
+            modalCloseBtn = document.querySelector('[data-close]');
+
+        function openModal() {
+            modal.classList.add('show');
+            modal.classList.remove('hide');
+        }
+
+        modalTrigger.addEventListener('click', openModal);
+
+        function closeModal() {
+            modal.classList.add('hide');
+            modal.classList.remove('show');
+        }
+        modalCloseBtn.addEventListener('click', closeModal);
+    </script>
+    </body>
+</html>

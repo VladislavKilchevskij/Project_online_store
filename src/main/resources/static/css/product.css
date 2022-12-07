@@ -1,0 +1,16 @@
+body {
+    background-color: #1a1f25;
+}
+
+div {
+    background-color: #f2f3f4;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+}
+
+a {
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    color: #e6b333;
+}

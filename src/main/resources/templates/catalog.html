@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8">
+    <title>Catalog</title>
+    <link rel="stylesheet" href="/css/styles.css" th:href="@{/css/styles.css}">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+
+</head>
+<body>
+<ul>
+    <li class="leftLi"><a href="/">Home</a></li>
+    <li class="leftLi">My profile</li>
+    <li class="secondLi"><a href="/logout">Logout</a></li>
+    <li class="secondLi"><a th:href="@{/account/{userId}/cart(userId=${userId})}">Cart</a></li>
+    <li class="secondLi"><a th:href="@{/account/{userId}(userId=${userId})}">Profile</a></li>
+</ul>
+<div class="panelContainer">
+    <a sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{/product_manager/new}" class="btn btn-primary btn-sm mb-3">
+        Add product </a>
+    <br>
+    <form class="form" th:action="@{/catalog}">
+        <label for="category"><h5>Категория: </h5></label>
+        <select class="custom-select-sm form-select" id="category" th:name="catId">
+            <option value="0">Choose category</option>
+            <th:block th:each="categoryDto : ${listCategories}">
+                <option th:value="${categoryDto.getId()}"
+                        th:text="${categoryDto.categoryName}">placeholder
+                </option>
+            </th:block>
+        </select> <br>
+        <label for="manufacturer"><h5>Производитель: </h5></label>
+        <select class="custom-select-sm" id="manufacturer" th:name="manId">
+            <option value="0">Choose manufacturer</option>
+            <div th:each="manufacturerDto : ${listManufacturers}">
+                <option th:value="${manufacturerDto.getId()}"
+                        th:text="${manufacturerDto.manufacturerName}">placeholder
+                </option>
+            </div>
+        </select> <br>
+        <input class="btn btn-warning" type="submit" value="Apply filter"/> <a class="btn btn-warning"
+                                                                               th:href="@{/catalog}">Drop filter</a>
+    </form>
+</div>
+<div class="container my-2">
+    <h1>Catalog</h1>
+    <br>
+    <table class="table table-striped table-responsive-md">
+        <thead>
+        <tr>
+            <th>Image</th>
+            <th>
+                <a th:href="@{'/catalog/' + ${userId} +
+                '/page/' + ${currentPage} +
+                '?sortField=productName&sortDir=' + ${reverseSortDir} +
+                '&catId=' + ${catId} + '&manId=' + ${manId}}">
+                    Product name</a>
+            </th>
+            <th>
+                <a th:href="@{'/catalog/' + ${userId} +
+                '/page/' + ${currentPage} +
+                '?sortField=price&sortDir=' + ${reverseSortDir} +
+                '&catId=' + ${catId} + '&manId=' + ${manId}}">
+                    Price</a>
+            </th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="productElement : ${listProducts}">
+            <td th:switch="${productElement.media.size() == 0}">
+                <th:block th:case="true">
+                    <img th:src="@{/img/no_image.png}"
+                         alt="no_image"
+                         style="width: 150px"/>
+                </th:block>
+                <th:block th:case="false">
+                    <th:block th:each="mediaElement : ${productElement.getMedia()}">
+                        <img th:src="@{'/imageRepo' + ${mediaElement.getMediaUrl()} + ${mediaElement.getMediaName()}}"
+                             alt="image"
+                             style="width: 150px"/>
+                    </th:block>
+                </th:block>
+            </td>
+            <td><h6 th:text="${productElement.productName}"></h6></td>
+            <td><h6 th:text="${productElement.price}"></h6></td>
+            <td>
+                <a class="btn btn-warning"
+                   th:href="@{/catalog/{userId}/product/{id}(id=${productElement.id}, userId=${userId})}">Show info</a>
+                <a class="btn btn-warning"
+                   sec:authorize="hasAuthority('ROLE_ADMIN')"
+                   th:href="@{/product_manager/{id}/edit(id=${productElement.id})}">Update</a>
+                <a class="btn btn-danger"
+                   sec:authorize="hasAuthority('ROLE_ADMIN')"
+                   th:href="@{/product_manager/{id}/delete(id=${productElement.id})}">Delete</a>
+            </td>
+            <td>
+                <form th:action="@{/{userId}/add_to_cart(userId=${userId})}" th:object="${productElement}" method="post">
+                    <input type="hidden" name="productId" th:value="${productElement.getId()}"/>
+                    <input type="hidden" name="price" th:value="${productElement.getPrice()}"/>
+                    <input type="number" name="amount" min="1" value="1" style="width: 45px"/>
+                    <button class="btn btn-warning" type="submit">Add to cart</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div th:if="${totalPages gt 1}">
+        <div class="row col-sm-10">
+            <div class="col-sm-2">
+                Total Rows: [[${totalItems}]]
+            </div>
+            <div class="col-sm-2">
+                <div class="btn-group me-1" role="group">
+                <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+                    <a class="btn btn-warning"
+                       th:if="${currentPage != i}"
+                       th:href="@{'/catalog/' + ${userId} +
+                       '/page/' + ${i}+
+                       '?sortField=' + ${sortField} +
+                       '&sortDir=' + ${sortDir} +
+                       '&catId=' + ${catId} + '&manId=' + ${manId}}">[[${i}]]</a>
+                    <span class="btn btn-secondary"
+                          th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
+                </span>
+                </div>
+            </div>
+            <div class="btn-group me-2" role="group">
+                <div class="col-sm-4">
+                    <a class="btn btn-warning"
+                       th:if="${currentPage lt totalPages}"
+                       th:href="@{'/catalog/' + ${userId} +
+                       '/page/' + ${currentPage + 1} +
+                       '?sortField=' + ${sortField} +
+                       '&sortDir=' + ${sortDir} +
+                       '&catId=' + ${catId} + '&manId=' + ${manId}}">Next</a>
+                    <span class="btn btn-secondary"
+                          th:unless="${currentPage < totalPages}">Next</span>
+                </div>
+                <div class="col-sm-4">
+                    <a class="btn btn-warning"
+                       th:if="${currentPage lt totalPages}"
+                       th:href="@{'/catalog/' + ${userId} +
+                       '/page/' + ${totalPages} +
+                       '?sortField=' + ${sortField} +
+                       '&sortDir=' + ${sortDir} +
+                       '&catId=' + ${catId} + '&manId=' + ${manId}}">Last</a>
+                    <span class="btn btn-secondary" th:unless="${currentPage lt totalPages}">Last</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
