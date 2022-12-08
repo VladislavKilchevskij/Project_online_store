@@ -1,7 +1,7 @@
 package com.academy.project.mapper;
 
 import com.academy.project.dto.CartDto;
-import com.academy.project.mapper.defaultMappers.DefaultMapper;
+import com.academy.project.mapper.defaultmappers.DefaultMapper;
 import com.academy.project.model.entity.Cart;
 import com.academy.project.service.ProductService;
 import com.academy.project.service.impl.OrderDetailsServiceImpl;

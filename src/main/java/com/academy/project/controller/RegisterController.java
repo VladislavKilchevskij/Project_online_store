@@ -2,7 +2,7 @@ package com.academy.project.controller;
 
 
 import com.academy.project.dto.AddressDto;
-import com.academy.project.dto.UserDto;
+import com.academy.project.dto.UserRegDto;
 import com.academy.project.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -19,16 +19,17 @@ public class RegisterController {
 
     @GetMapping("/register")
     public String registerForm(Model model) {
-        var userDto = new UserDto();
-        model.addAttribute("userDto", userDto);
+        var userRegDto = new UserRegDto();
+        model.addAttribute("userDto", userRegDto);
         return "register";
     }
 
     @PostMapping("/register")
-    public String register(@ModelAttribute UserDto userDto, Model model) {
-        userService.save(userDto);
+    public String register(@ModelAttribute UserRegDto userRegDto, Model model) {
+        userService.save(userRegDto);
+        var userDto = userService.getUserByUsername(userRegDto.getUsername());
         model.addAttribute("userDto", userDto);
         model.addAttribute("address", new AddressDto());
-        return "profile/account";
+        return "redirect:/account?username=" + userDto.getUsername();
     }
 }

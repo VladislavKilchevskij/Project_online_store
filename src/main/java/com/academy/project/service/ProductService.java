@@ -10,7 +10,7 @@ public interface ProductService {
 
     void save(ProductDto newProductDto);
     Product getProductById(Integer id);
-    Page<ProductDto> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection);
+
     Page<ProductDto> getPreparedPage(int pageNo, String sortField, String sortDir, Integer catId, Integer manId);
     List<ProductDto> findAllProductDto();
     ProductDto findById(Integer id);

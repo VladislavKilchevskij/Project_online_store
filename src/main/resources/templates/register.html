@@ -7,7 +7,7 @@
     <body>
         <div id="container">
             <h3>Sign up</h3>
-            <form class="registerForm" action="#" th:action="@{/register}" th:object="${userDto}" method="post"  >
+            <form class="registerForm" action="#" th:action="@{/register}" th:object="${userDto}" method="post">
                 <div>
                     <input class="inputFields" type="text" th:field="*{username}" placeholder="Username" required>
                 </div>

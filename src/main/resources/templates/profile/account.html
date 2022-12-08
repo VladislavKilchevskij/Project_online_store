@@ -24,15 +24,15 @@
             <table>
                 <tr>
                 <td>User:</td>
-                <td><span class="accSpan" th:utext="${userAccountDto.name}"></span><span th:utext="' ' + ${userAccountDto.surname}"></span></td>
+                <td><span class="accSpan" th:utext="${userAccountDto.getName()}"></span><span th:utext="' ' + ${userAccountDto.getSurname()}"></span></td>
                 </tr>
                 <tr>
                     <td>E-mail:</td>
-                    <td><span class="accSpan" th:utext="${userAccountDto.email}"></span></td>
+                    <td><span class="accSpan" th:utext="${userAccountDto.getEmail()}"></span></td>
                 </tr>
                 <tr>
                     <td>Phone:</td>
-                    <td><span class="accSpan" th:utext="'  '+ ${userAccountDto.phoneNumber}"></span></td>
+                    <td><span class="accSpan" th:utext="'  '+ ${userAccountDto.getPhoneNumber()}"></span></td>
                 </tr>
             </table>
                 <h3>Addresses:</h3>

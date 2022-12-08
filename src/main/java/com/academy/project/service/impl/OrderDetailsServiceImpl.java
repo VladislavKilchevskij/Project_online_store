@@ -20,6 +20,11 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class OrderDetailsServiceImpl implements OrderDetailsService {
+    private static final String STATUS_CART = "IN_CART";
+    private static final String STATUS_DELIVERING = "DELIVERING";
+    private static final String START_PRICE = "0.00";
+    private static final int DAY_AMOUNT = 3;
+
     private final OrderDetailsRepository orderRepository;
     private final UserRepository userRepository;
     private final OrderDetailsMapper orderDetailsMapper;
@@ -28,8 +33,8 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
     @Override
     public void createOrder(Integer userId) {
         var order = new OrderDetails();
-        order.setOrderStatus("IN_CART");
-        order.setTotalPrice(new BigDecimal("0.00"));
+        order.setOrderStatus(STATUS_CART);
+        order.setTotalPrice(new BigDecimal(START_PRICE));
         order.setUser(userRepository.getReferenceById(userId));
         orderRepository.save(order);
     }
@@ -43,7 +48,7 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
     @Override
     public OrderDetails getInCartOrderByUserId(Integer userId) {
         var user = userRepository.getReferenceById(userId);
-        var order = orderRepository.getByUserAndOrderStatus(user, "IN_CART");
+        var order = orderRepository.getByUserAndOrderStatus(user, STATUS_CART);
         if (order == null) {
             createOrder(userId);
             return getInCartOrderByUserId(userId);
@@ -59,7 +64,7 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
     @Override
     public List<OrderDetailsSimpleDto> getAllOrdersByUserId(Integer userId) {
         var user = userRepository.getReferenceById(userId);
-        var orders = orderRepository.getAllByUserAndOrderStatusIsNot(user, "IN_CART");
+        var orders = orderRepository.getAllByUserAndOrderStatusIsNot(user, STATUS_CART);
         return orderDetailsSimpleListMapper.toDtoList(orders);
     }
     @Override
@@ -71,10 +76,10 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
     @Override
     public void updateOrderStatus(OrderDetailsDto orderDetailsDto) {
         var orderDetails = orderDetailsMapper.toEntity(orderDetailsDto);
-        orderDetails.setOrderStatus("DELIVERING");
+        orderDetails.setOrderStatus(STATUS_DELIVERING);
         orderDetails.setOrderDate(new Date());
         var cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, 3);
+        cal.add(Calendar.DATE, DAY_AMOUNT);
         var deliveryDate = cal.getTime();
         orderDetails.setDeliveryDate(deliveryDate);
         orderRepository.updateOrderStatus(orderDetails);

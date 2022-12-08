@@ -32,11 +32,11 @@ public class User implements UserDetails {
     @Column
     private Boolean isDeleted = false;
     @Column(name = "account_non_expired")
-    private boolean accountNonExpired;
+    private boolean accountNonExpired = true;
     @Column(name = "account_non_locked")
-    private boolean accountNonLocked;
+    private boolean accountNonLocked = true;
     @Column(name = "credentials_non_expired")
-    private boolean credentialsNonExpired;
+    private boolean credentialsNonExpired = true;
     @Column
     private Date createTime = new Date();
     @ManyToOne(fetch = FetchType.EAGER)

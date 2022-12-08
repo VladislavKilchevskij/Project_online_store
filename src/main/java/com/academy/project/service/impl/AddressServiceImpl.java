@@ -25,15 +25,17 @@ public class AddressServiceImpl implements AddressService {
     private final AddressListMapper listMapper;
 
     @Override
-    public void save(AddressUserIdDto addressUserIdDto, Integer userId) {
+    public boolean save(AddressUserIdDto addressUserIdDto, Integer userId) {
         addressUserIdDto.setUserId(userId);
         addressRepository.save(addressUserIdMapper.toEntity(addressUserIdDto));
+        return true;
     }
 
     @Override
-    public void update(AddressDto updateAddressDto) {
+    public boolean update(AddressDto updateAddressDto) {
         var addressEntity = mapper.toEntity(updateAddressDto);
         addressRepository.update(addressEntity);
+        return true;
     }
 
     @Override
@@ -58,7 +60,8 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public void delete(Integer id) {
+    public boolean delete(Integer id) {
         addressRepository.deleteById(id);
+        return true;
     }
 }

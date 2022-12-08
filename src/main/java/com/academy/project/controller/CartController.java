@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 @Controller
 @RequiredArgsConstructor
 public class CartController {
-
+    private static final String REFERER = "Referer";
     private final OrderDetailsService orderDetailsService;
     private final CartService cartService;
     private final AddressService addressService;
@@ -37,7 +37,7 @@ public class CartController {
                             HttpServletRequest request) {
 
         cartService.addProductToCart(userId, productId, amount, price);
-        var referer = request.getHeader("Referer");
+        var referer = request.getHeader(REFERER);
         return "redirect:" + referer;
     }
 

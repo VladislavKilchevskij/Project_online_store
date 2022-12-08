@@ -9,14 +9,12 @@ DROP TABLE IF EXISTS techStoreDB.Media;
 DROP TABLE IF EXISTS techStoreDB.Order;
 DROP TABLE IF EXISTS techStoreDB.Cart;
 
--- Роль пользователя
 CREATE TABLE IF NOT EXISTS techStoreDB.Role
 (
     id       INT PRIMARY KEY AUTO_INCREMENT,
     roleName VARCHAR(16) NOT NULL
 );
 
--- Сведения о пользователях
 CREATE TABLE IF NOT EXISTS techStoreDB.User
 (
     id          INT PRIMARY KEY AUTO_INCREMENT,
@@ -33,7 +31,6 @@ CREATE TABLE IF NOT EXISTS techStoreDB.User
     CONSTRAINT fk_Users_Has_Role FOREIGN KEY (role_id) REFERENCES techStoreDB.Role (id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
--- История блокировок пользователей
 CREATE TABLE IF NOT EXISTS techStoreDB.BlockHistory
 (
     id               INT PRIMARY KEY AUTO_INCREMENT,
@@ -45,7 +42,6 @@ CREATE TABLE IF NOT EXISTS techStoreDB.BlockHistory
     CONSTRAINT fk_Customer_From_User FOREIGN KEY (customer_id) REFERENCES techStoreDB.User (id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
--- Адрес(а) пользователя
 CREATE TABLE IF NOT EXISTS techStoreDB.Address
 (
     id       INT PRIMARY KEY AUTO_INCREMENT,
@@ -62,21 +58,18 @@ CREATE TABLE IF NOT EXISTS techStoreDB.Address
     CONSTRAINT fk_Adress_User FOREIGN KEY (user_id) REFERENCES techStoreDB.User (id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
--- Категория товара
 CREATE TABLE IF NOT EXISTS techStoreDB.Category
 (
     id           INT PRIMARY KEY AUTO_INCREMENT,
     categoryName VARCHAR(15) NOT NULL
 );
 
--- Производитель (марка) товара
 CREATE TABLE IF NOT EXISTS techStoreDB.Manufacturer
 (
     id               INT PRIMARY KEY AUTO_INCREMENT,
     manufacturerName VARCHAR(20) NOT NULL
 );
 
--- Сведения о товарах (каталог)
 CREATE TABLE IF NOT EXISTS techStoreDB.Product
 (
     id                INT PRIMARY KEY AUTO_INCREMENT,
@@ -99,7 +92,6 @@ CREATE TABLE IF NOT EXISTS techStoreDB.Product
     CONSTRAINT fk_Product_Brand FOREIGN KEY (manufacturer_id) REFERENCES techStoreDB.Manufacturer (id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
--- Изображения/ссылки на видеообзор товара
 CREATE TABLE IF NOT EXISTS techStoreDB.Media
 (
     id         INT PRIMARY KEY AUTO_INCREMENT,
@@ -110,7 +102,6 @@ CREATE TABLE IF NOT EXISTS techStoreDB.Media
     CONSTRAINT fk_Media_Product FOREIGN KEY (product_id) REFERENCES techStoreDB.Product (id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
--- Сведения о заказе(ах) пользователя
 CREATE TABLE IF NOT EXISTS techStoreDB.Order_details
 (
     id           INT PRIMARY KEY AUTO_INCREMENT,
@@ -122,7 +113,6 @@ CREATE TABLE IF NOT EXISTS techStoreDB.Order_details
     CONSTRAINT fk_Order_User FOREIGN KEY (user_id) REFERENCES techStoreDB.User (id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
--- Корзина, в т.ч. история покупок
 CREATE TABLE IF NOT EXISTS techStoreDB.Cart
 (
     id         INT PRIMARY KEY AUTO_INCREMENT,
@@ -130,6 +120,6 @@ CREATE TABLE IF NOT EXISTS techStoreDB.Cart
     product_id INT            NOT NULL,
     amount     INT            NOT NULL,
     price      DECIMAL(10, 2) NOT NULL,
-    CONSTRAINT fk_ProductInсCart_Order FOREIGN KEY (order_id) REFERENCES techStoreDB.Order (id) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    CONSTRAINT fk_ProductInсCart_Order FOREIGN KEY (order_id) REFERENCES techStoreDB.Order_details (id) ON DELETE NO ACTION ON UPDATE NO ACTION,
     CONSTRAINT fk_ProductInCart_Product FOREIGN KEY (product_id) REFERENCES techStoreDB.Product (id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );

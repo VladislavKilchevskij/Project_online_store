@@ -2,7 +2,6 @@ package com.academy.project.service.impl;
 
 import com.academy.project.dto.CategoryDto;
 import com.academy.project.mapper.CategoryListMapper;
-import com.academy.project.mapper.CategoryMapper;
 import com.academy.project.model.repository.CategoryRepository;
 import com.academy.project.service.CategoryService;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +14,6 @@ import java.util.List;
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
-    private final CategoryMapper mapper;
     private final CategoryListMapper listMapper;
 
     @Override

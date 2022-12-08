@@ -8,14 +8,14 @@ import java.util.List;
 
 public interface AddressService {
 
-    void save(AddressUserIdDto addressUserIdDto, Integer userId);
+    boolean save(AddressUserIdDto addressUserIdDto, Integer userId);
 
-    void update(AddressDto updateAddressDto);
+    boolean update(AddressDto updateAddressDto);
 
-    Address getById(Integer id);        // Used by Mapstruct
+    Address getById(Integer id);
     AddressDto findById(Integer id);
     List<AddressDto> findAll();
     List<AddressDto> findAllByUserId(Integer userId);
 
-    void delete(Integer id);
+    boolean delete(Integer id);
 }

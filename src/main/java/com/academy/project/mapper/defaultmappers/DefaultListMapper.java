@@ -1,4 +1,4 @@
-package com.academy.project.mapper.defaultMappers;
+package com.academy.project.mapper.defaultmappers;
 
 
 import java.util.List;

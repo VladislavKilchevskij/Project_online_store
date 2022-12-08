@@ -19,6 +19,9 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class CatalogController {
+    private static final String SORTFIELD = "productName";
+    private static final String ASC = "asc";
+    private static final String DESC = "desc";
 
     private final UserService userService;
     private final ProductService productService;
@@ -34,10 +37,10 @@ public class CatalogController {
         model.addAttribute("userId", userId);
         if (catId != null || manId != null) {
             return getPaginatedCatalog(userId,
-                    1, "productName", "asc", catId, manId, model);
+                    1, SORTFIELD, ASC, catId, manId, model);
         }
         return getPaginatedCatalog(userId,
-                1, "productName", "asc", 0, 0, model);
+                1, SORTFIELD, ASC, 0, 0, model);
     }
 
     @GetMapping("/catalog/{userId}/page/{pageNo}")
@@ -62,7 +65,7 @@ public class CatalogController {
         model.addAttribute("totalItems", page.getTotalElements());
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDir);
-        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+        model.addAttribute("reverseSortDir", sortDir.equals(ASC) ? DESC : ASC);
         model.addAttribute("catId", catId);
         model.addAttribute("manId", manId);
         model.addAttribute("listProducts", listProducts);

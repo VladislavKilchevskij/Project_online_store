@@ -1,7 +1,7 @@
 package com.academy.project.mapper;
 
 import com.academy.project.dto.AddressUserIdDto;
-import com.academy.project.mapper.defaultMappers.DefaultMapper;
+import com.academy.project.mapper.defaultmappers.DefaultMapper;
 import com.academy.project.model.entity.Address;
 import com.academy.project.service.UserService;
 import org.mapstruct.InjectionStrategy;

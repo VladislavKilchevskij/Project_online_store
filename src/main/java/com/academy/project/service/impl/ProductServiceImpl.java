@@ -34,11 +34,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product getProductById(Integer id) {
-        return productRepository.getReferenceById(id);
-    }
-
-    @Override
     public Page<ProductDto> getPreparedPage(int pageNo, String sortField, String sortDir, Integer catId, Integer manId) {
         Page<Product> entities = null;
         int pageSize = 5;
@@ -47,41 +42,36 @@ public class ProductServiceImpl implements ProductService {
 
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
 
-        if (catId != 0 & manId != 0) {
+        if (catId != 0 && manId != 0) {
             Manufacturer manufacturer = manufacturerRepository.getReferenceById(manId);
             Category category = categoryRepository.getReferenceById(catId);
             entities = productRepository.findAllByCategoryAndManufacturer(category, manufacturer, pageable);
 
-        } else if (catId == 0 & manId != 0) {
+        } else if (catId == 0 && manId != 0) {
             Manufacturer manufacturer = manufacturerRepository.getReferenceById(manId);
             entities = productRepository.findAllByManufacturer(manufacturer, pageable);
-        } else if (manId == 0 & catId != 0) {
+        } else if (manId == 0 && catId != 0) {
             Category category = categoryRepository.getReferenceById(catId);
             entities = productRepository.findAllByCategory(category, pageable);
-        } else if (catId == 0 & manId == 0){
+        } else if (catId == 0 && manId == 0){
             entities = productRepository.findAll(pageable);
         }
         return entities.map(mapper::toDto);
     }
 
     @Override
-    public Page<ProductDto> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
-        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
-                Sort.by(sortField).descending();
-
-        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
-        Page<Product> entities = productRepository.findAll(pageable);
-        return entities.map(mapper::toDto);
-    }
-
-    @Override
-    public List<ProductDto> findAllProductDto() {
-        return mapperList.toDtoList(productRepository.findAll());
+    public Product getProductById(Integer id) {
+        return productRepository.getReferenceById(id);
     }
 
     @Override
     public ProductDto findById(Integer id) {
         return mapper.toDto(productRepository.getReferenceById(id));
+    }
+
+    @Override
+    public List<ProductDto> findAllProductDto() {
+        return mapperList.toDtoList(productRepository.findAll());
     }
 
     @Override

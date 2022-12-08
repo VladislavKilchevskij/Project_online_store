@@ -11,14 +11,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.Column;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
-    Product findByProductName(String name);
     Page<Product> findAllByCategoryAndManufacturer(Category category, Manufacturer manufacturer, Pageable pageable);
     Page<Product> findAllByCategory(Category category, Pageable pageable);
     Page<Product> findAllByManufacturer(Manufacturer manufacturer, Pageable pageable);
